@@ -1,8 +1,7 @@
-import { move } from './math'
+import { move, sub, add } from './math'
 
-export function createSnake(canvas) {
-  const radius = Math.min(50, canvas.width / 20, canvas.height / 20)
-  const speed = 2
+export function createSnake(canvas, radius) {
+  const speed = radius / 25
   const head = { x: canvas.width / 2, y: canvas.height / 2, head: true }
   const segments = [head]
 
@@ -35,7 +34,8 @@ export function createSnake(canvas) {
   }
 
   function eat() {
-    segments.unshift({ x: segments[0].x, y: segments[0].y })
+    const position = add(sub(segments[0], segments[1]), segments[0])
+    segments.unshift(position)
   }
 
   function getHead() {

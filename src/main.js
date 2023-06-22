@@ -10,10 +10,12 @@ resize(canvas)
 
 window.addEventListener('resize', () => resize(canvas))
 
+const radius = Math.min(50, canvas.width / 20, canvas.height / 20)
+
 const score = createScore()
 
 const mouse = createMouse(canvas)
-const snake = createSnake(canvas)
+const snake = createSnake(canvas, radius)
 const apples = [...Array(5)].map(() => createApple(canvas))
 
 let lastTime = 0
@@ -21,7 +23,7 @@ let lastTime = 0
 loop(0)
 
 function loop(time) {
-  const dt = time - lastTime
+  const dt = Math.min(time - lastTime, 60)
   lastTime = time
 
   snake.update(dt, mouse)
